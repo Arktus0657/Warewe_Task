@@ -1,0 +1,29 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div class="product-detail-card">
+
+    <h2 class="product-title">{{ product.name }}</h2>
+
+    <p class="product-price">₹{{ product.price }}</p>
+
+    {% if product.description %}
+        <p class="product-desc">{{ product.description }}</p>
+    {% endif %}
+
+    <div class="product-actions">
+        <a class="btn primary" href="{% url 'add_to_cart' product.id %}">
+            Add to Cart
+        </a>
+
+        <a class="btn ghost" href="{% url 'like_product' product.id %}">
+            👍 Like
+        </a>
+
+        <a class="btn ghost danger" href="{% url 'dislike_product' product.id %}">
+            👎 Dislike
+        </a>
+    </div>
+
+</div>
+{% endblock %}

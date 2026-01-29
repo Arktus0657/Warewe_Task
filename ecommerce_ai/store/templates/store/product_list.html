@@ -1,0 +1,42 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2 class="page-title">Explore Products</h2>
+
+    <div class="product-grid">
+        {% for p in products %}
+            <div class="product-card">
+                <div class="product-card-body">
+                    <h3 class="product-name">
+                        <a href="{% url 'product_detail' p.id %}">
+                            {{ p.name }}
+                        </a>
+                    </h3>
+
+                    <div class="product-meta">
+                        <span class="price">₹{{ p.price }}</span>
+                    </div>
+                </div>
+
+                <div class="product-actions">
+                    <a href="{% url 'add_to_cart' p.id %}" class="btn primary">
+                        Add to Cart
+                    </a>
+
+                    <div class="icon-actions">
+                        <a href="{% url 'like_product' p.id %}" title="Like">
+                            👍
+                        </a>
+                        <a href="{% url 'dislike_product' p.id %}" title="Dislike">
+                            👎
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>No products found.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

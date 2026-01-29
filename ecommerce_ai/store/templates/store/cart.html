@@ -1,0 +1,37 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+<div class="cart-container">
+
+    <h2 class="cart-title">Your Cart</h2>
+
+    {% if cart_items %}
+        <div class="cart-list">
+
+            {% for item in cart_items %}
+                <div class="cart-item">
+                    <div class="cart-info">
+                        <h4>{{ item.product.name }}</h4>
+                        <p class="price">₹{{ item.product.price }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <div class="cart-footer">
+            <div class="cart-total">
+                Total: ₹{{ total_price }}
+            </div>
+
+            <button class="btn primary checkout-btn">
+                Proceed to Checkout
+            </button>
+        </div>
+
+    {% else %}
+        <p class="empty-cart">Your cart is empty.</p>
+    {% endif %}
+
+</div>
+{% endblock %}
