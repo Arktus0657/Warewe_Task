@@ -18,4 +18,5 @@ def export_interaction_dataset():
         "user_id", "product_id", "total_score"
     )
 
+
     return list(qs)

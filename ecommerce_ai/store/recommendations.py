@@ -21,8 +21,7 @@ def min_max_normalize(scores):
         return [(pid, 1.0) for pid, _ in scores]
 
     return [
-        (pid, (s - min_s) / (max_s - min_s))
-        for pid, s in scores
+        (pid, (s - min_s) / (max_s - min_s)) for pid, s in scores
     ]
 
 def get_fallback_products(limit=5):

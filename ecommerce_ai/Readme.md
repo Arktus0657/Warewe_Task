@@ -1,7 +1,9 @@
 # E-commerce AI Recommendation System
 
 ## Overview
-This project is a Django-based e-commerce web application enhanced with an AI-powered product recommendation system. It demonstrates end-to-end backend development, user interaction tracking, basic recommendation logic, and performance optimization using Cython. The system is designed to be simple, extensible, and suitable for demonstrating applied machine learning concepts in a real-world web application.
+This project is a Django-based e-commerce web application enhanced with a hybrid AI-powered product recommendation system. It demonstrates end-to-end backend development, user interaction tracking, recommendation modeling, and performance optimization using Cython.
+
+The system is designed to simulate how modern e-commerce platforms recommend products based on user behavior such as views, likes, and dislikes, combining rule-based scoring with intelligent fallback mechanisms for new users.
 
 ---
 
@@ -12,26 +14,46 @@ This project is a Django-based e-commerce web application enhanced with an AI-po
 - User authentication (login/logout)
 - Cart management (add to cart, view cart)
 - Session-based user handling
+- User-specific product interactions
 
 ### User Interaction Tracking
 - **Views**: Counted only when a user opens a product detail page (captures genuine interest)
 - **Likes / Dislikes**: One per user per product, implemented as a toggle to avoid noisy data
 - Persistent storage of interactions for recommendation modeling
+- View counts are updated using atomic database operations to prevent race conditions
 
-### Recommendation System
+### Hybrid Recommendation System
 - Rule-based, behavior-driven recommendation engine
 - Scores products using:
   - View frequency (recurring interest)
   - Likes (positive signal)
   - Dislikes (negative signal)
+- The system also builds a user–item interaction matrix and computes user–user similarity using cosine similarity.
+- This introduces a basic collaborative filtering recommendation system.
 - **Cold-start handling**: New users receive recommendations based on globally popular products
 - Score normalization to prevent bias toward extreme values
+
+### Caching Layer
+
+To improve performance and scalability:
+
+- Recommendations are cached per user for 5 minutes
+- Implemented using Django’s caching framework
+- Reduces repeated computation and database queries
+- Improves response time for frequently active users
 
 ### Performance Optimization with Cython
 - Identified recommendation scoring as a compute-heavy hot path
 - Reimplemented scoring logic using **Cython**
-- Compiled into a native extension callable directly from Django
-- Achieved a measurable speedup over pure Python implementation
+- Compiled into a native extension (.pyd) callable directly from Django
+- Benchmarked against pure Python implementation and achieved a measurable speedup over pure Python implementation
+- Benchmark Result 
+| Implementation | Time   |
+| -------------- | ------ |
+| Python         | ~0.78s |
+| Cython         | ~0.14s |
+| Speedup        | ~3–5×  |
+
 
 ---
 

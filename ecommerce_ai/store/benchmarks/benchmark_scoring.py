@@ -2,6 +2,7 @@ import time
 from store.utils.py_scorer import py_score
 from store.cython_utils.scorer import fast_score
 
+
 N = 1_000_000
 
 # Python benchmark
