@@ -48,6 +48,7 @@ To improve performance and scalability:
 - Compiled into a native extension (.pyd) callable directly from Django
 - Benchmarked against pure Python implementation and achieved a measurable speedup over pure Python implementation
 - Benchmark Result 
+
 | Implementation | Time   |
 | -------------- | ------ |
 | Python         | ~0.78s |
