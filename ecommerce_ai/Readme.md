@@ -55,16 +55,30 @@ To improve performance and scalability:
 | Cython         | ~0.14s |
 | Speedup        | ~3–5×  |
 
+---
+## Data Engineering Pipeline
+
+Interaction data is transformed before training:
+
+1. Extract user interactions from database
+2. Convert actions into numerical scores using ORM annotations
+3. Build user–item matrix
+4. Train similarity model
+5. Store similarity matrix for recommendation use
+
 
 ---
 
 ## Tech Stack
-
-- **Backend**: Django (Python)
-- **Database**: SQLite (for development)
-- **Recommendation Logic**: Python + Cython
-- **Performance Optimization**: Cython (native extension)
-- **Environment**: Python 3.11, Windows
+| Component                | Technology           |
+| ------------------------ | -------------------- |
+| Backend                  | Django (Python)      |
+| Database                 | SQLite (Development) |
+| Recommendation System    | Python               |
+| Collaborative Filtering  | Scikit-learn         |
+| Performance Optimization | Cython               |
+| Caching                  | Django Cache         |
+| Environment              | Python 3.11          |
 
 ---
 
@@ -133,13 +147,23 @@ Speedup     : 5.5x
 
 ## How to Run
 
-1. Create and activate a virtual environment
-2. Install dependencies
-3. Run migrations
-4. Start the development server
-
+### 1. Create and activate a virtual environment
+```bash
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
+### 2. Install dependencies
+```bash
+cd store/cython_utils
+python setup.py build_ext --inplace
+```
+### 3. Run migrations
 ```bash
 python manage.py migrate
+```
+### 4. Start the development server
+```bash
 python manage.py runserver
 ```
 
@@ -155,14 +179,21 @@ python manage.py runserver
 
 ## Future Improvements
 
-- Replace rule-based recommender with collaborative filtering or matrix factorization
 - Periodic offline training with larger datasets
-- Caching recommended results per user
-- Deployment with PostgreSQL and Redis
+- Deployment with PostgreSQL for production 
+- Redis caching instead of local memory cache
+- Matrix Factorization (SVD / ALS)
+- Deploy on AWS/GCP
 
 ---
 
 ## Summary
 
-This project demonstrates practical backend engineering, thoughtful data modeling for recommendations, and real performance optimization using Cython. It balances correctness, simplicity, and efficiency, making it suitable both as an academic assignment and a foundation for real-world extension.
-
+This project demonstrates:
+- Backend development using Django
+- User behavior tracking and data modeling
+- Hybrid recommendation system (rule-based + collaborative filtering)
+- Feature engineering and ML pipeline integration
+- Caching for performance improvement
+- Low-level performance optimization using Cython
+- Benchmarking and performance analysis
